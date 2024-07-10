@@ -4,5 +4,3 @@ chrome.action.onClicked.addListener((tab) => {
     files: ["main.js"],
   });
 });
-
-console.log("Background script loaded");
