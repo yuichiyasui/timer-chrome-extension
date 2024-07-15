@@ -6,42 +6,41 @@ import ShadowRoot from "react-shadow";
 
 const APP_ROOT_ID = "timer-app" as const;
 
-chrome.runtime.onMessage.addListener((message) => {
-  if (message.action !== "toggle") {
-    return;
+const appRoot = document.getElementById(APP_ROOT_ID);
+
+if (import.meta.env.MODE === "development") {
+  if (appRoot) {
+    ReactDOM.createRoot(appRoot).render(
+      <React.StrictMode>
+        <ShadowRoot.div>
+          <App />
+          <style type="text/css">{globalStyles}</style>
+        </ShadowRoot.div>
+      </React.StrictMode>,
+    );
   }
+} else {
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.action !== "toggle") {
+      return;
+    }
 
-  const timerApp = document.getElementById(APP_ROOT_ID);
-  if (timerApp) {
-    timerApp.remove();
-    return;
-  }
+    if (appRoot) {
+      appRoot.remove();
+      return;
+    }
 
-  const appRoot = document.createElement("div");
-  appRoot.id = APP_ROOT_ID;
-  document.body.appendChild(appRoot);
+    const root = document.createElement("div");
+    root.id = APP_ROOT_ID;
+    document.body.appendChild(root);
 
-  ReactDOM.createRoot(appRoot).render(
-    <React.StrictMode>
-      <ShadowRoot.div>
-        <App />
-        <style type="text/css">{globalStyles}</style>
-      </ShadowRoot.div>
-    </React.StrictMode>,
-  );
-});
-
-// const initForDev = () => {
-// 	const appRoot = document.getElementById(APP_ROOT_ID);
-// 	if (!appRoot) {
-// 		return;
-// 	}
-
-// 	ReactDOM.createRoot(appRoot).render(
-// 		<React.StrictMode>
-// 			<App />
-// 		</React.StrictMode>,
-// 	);
-// };
-
-// initForDev();
+    ReactDOM.createRoot(root).render(
+      <React.StrictMode>
+        <ShadowRoot.div>
+          <App />
+          <style type="text/css">{globalStyles}</style>
+        </ShadowRoot.div>
+      </React.StrictMode>,
+    );
+  });
+}
