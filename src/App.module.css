@@ -1,0 +1,13 @@
+.timer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: calc(infinity);
+    background-color: #ffffff;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
