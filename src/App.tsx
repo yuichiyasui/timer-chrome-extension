@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./App.module.css";
+import { Button } from "./components/Button";
 
 function App() {
   const [hours, setHours] = useState(0);
@@ -79,43 +79,57 @@ function App() {
   const screenSeconds = lastSeconds % 60;
 
   return (
-    <div className={styles.timer}>
-      <h1>Timer</h1>
+    <div className="fixed top-0 left-0 z-[999999999] bg-white border border-gray-200 shadow-lg rounded-lg p-4">
+      <h1 className="text-3xl font-bold text-center mb-4">Timer</h1>
       {counting ? (
         <p>
           {screenHours}:{screenMinutes}:{screenSeconds}
         </p>
       ) : (
-        <div>
-          <input type="number" value={hours} onChange={handleHoursChange} />
+        <div className="flex gap-x-2 justify-center items-center">
+          <label className="flex flex-col items-center justify-center">
+            <input
+              type="number"
+              value={hours}
+              onChange={handleHoursChange}
+              className="rounded px-2 py-1 w-12"
+            />
+            <span>h</span>
+          </label>
           <span>:</span>
-          <input type="number" value={minutes} onChange={handleMinutesChange} />
+          <label className="flex flex-col items-center justify-center">
+            <input
+              type="number"
+              value={minutes}
+              onChange={handleMinutesChange}
+              className="rounded px-2 py-1 w-12"
+            />
+            <span>m</span>
+          </label>
           <span>:</span>
-          <input type="number" value={seconds} onChange={handleSecondsChange} />
+          <label className="flex flex-col items-center justify-center">
+            <input
+              type="number"
+              value={seconds}
+              onChange={handleSecondsChange}
+              className="rounded px-2 py-1 w-12"
+            />
+            <span>s</span>
+          </label>
         </div>
       )}
 
-      <div className={styles.buttonContainer}>
-        <button
-          type="button"
-          disabled={!canStart || counting}
-          onClick={startTimer}
-        >
+      <div className="flex gap-x-4 justify-center mt-5">
+        <Button disabled={!canStart || counting} onClick={startTimer}>
           Start
-        </button>
+        </Button>
         {paused ? (
-          <button type="button" onClick={resumeTimer}>
-            Resume
-          </button>
+          <Button onClick={resumeTimer}>Resume</Button>
         ) : (
-          <button type="button" onClick={stopTimer}>
-            Pause
-          </button>
+          <Button onClick={stopTimer}>Pause</Button>
         )}
 
-        <button type="button" onClick={resetTimer}>
-          Reset
-        </button>
+        <Button onClick={resetTimer}>Reset</Button>
       </div>
     </div>
   );
