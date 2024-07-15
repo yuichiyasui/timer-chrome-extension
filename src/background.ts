@@ -1,6 +1,7 @@
 chrome.action.onClicked.addListener((tab) => {
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id ?? chrome.tabs.TAB_ID_NONE },
-    files: ["main.js"],
-  });
+  if (typeof tab.id === "undefined") {
+    return;
+  }
+
+  chrome.tabs.sendMessage(tab.id, { action: "toggle" });
 });
