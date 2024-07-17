@@ -13,16 +13,26 @@ function App() {
 
   const [opacity, setOpacity] = useState(100);
 
+  const handleMoveTimer = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.buttons < 1 || !ref.current) {
+      return;
+    }
+
+    ref.current.style.left = `${ref.current.offsetLeft + e.movementX}px`;
+    ref.current.style.top = `${ref.current.offsetTop + e.movementY}px`;
+    ref.current.setPointerCapture(e.pointerId);
+  };
+
   const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHours(Number(e.target.value));
+    setHours(e.target.valueAsNumber);
   };
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinutes(Number(e.target.value));
+    setMinutes(e.target.valueAsNumber);
   };
 
   const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSeconds(Number(e.target.value));
+    setSeconds(e.target.valueAsNumber);
   };
 
   const startTimer = () => {
@@ -85,15 +95,7 @@ function App() {
   return (
     <div
       ref={ref}
-      onPointerMove={(e) => {
-        if (e.buttons < 1 || !ref.current) {
-          return;
-        }
-
-        ref.current.style.left = `${ref.current.offsetLeft + e.movementX}px`;
-        ref.current.style.top = `${ref.current.offsetTop + e.movementY}px`;
-        ref.current.setPointerCapture(e.pointerId);
-      }}
+      onPointerMove={handleMoveTimer}
       style={{
         opacity: opacity / 100,
       }}
