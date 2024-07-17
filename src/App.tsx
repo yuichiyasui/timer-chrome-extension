@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./components/Button";
 
 function App() {
+  const ref = useRef<HTMLDivElement>(null);
+
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -79,7 +81,19 @@ function App() {
   const screenSeconds = lastSeconds % 60;
 
   return (
-    <div className="fixed top-0 left-0 z-[999999999] bg-white border border-gray-200 shadow-lg rounded-lg p-4">
+    <div
+      ref={ref}
+      onPointerMove={(e) => {
+        if (e.buttons < 1 || !ref.current) {
+          return;
+        }
+
+        ref.current.style.left = `${ref.current.offsetLeft + e.movementX}px`;
+        ref.current.style.top = `${ref.current.offsetTop + e.movementY}px`;
+        ref.current.setPointerCapture(e.pointerId);
+      }}
+      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4"
+    >
       <h1 className="text-3xl font-bold text-center mb-4">Timer</h1>
       {counting ? (
         <p>
