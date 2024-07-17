@@ -11,6 +11,8 @@ function App() {
   const [lastSeconds, setLastSeconds] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
+  const [opacity, setOpacity] = useState(100);
+
   const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHours(Number(e.target.value));
   };
@@ -92,6 +94,9 @@ function App() {
         ref.current.style.top = `${ref.current.offsetTop + e.movementY}px`;
         ref.current.setPointerCapture(e.pointerId);
       }}
+      style={{
+        opacity: opacity / 100,
+      }}
       className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4"
     >
       <h1 className="text-3xl font-bold text-center mb-4">Timer</h1>
@@ -144,6 +149,19 @@ function App() {
         )}
 
         <Button onClick={resetTimer}>Reset</Button>
+      </div>
+      <div>
+        <label className="flex items-center">
+          <span>Opacity</span>
+          <input
+            type="range"
+            min={20}
+            max={100}
+            value={opacity}
+            onChange={(e) => setOpacity(e.target.valueAsNumber)}
+          />
+          <span>{opacity}</span>
+        </label>
       </div>
     </div>
   );
