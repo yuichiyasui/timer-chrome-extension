@@ -3,5 +3,9 @@ chrome.action.onClicked.addListener((tab) => {
     return;
   }
 
-  chrome.tabs.sendMessage(tab.id, { action: "toggle" });
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id ?? chrome.tabs.TAB_ID_NONE, {
+      action: "toggle",
+    });
+  });
 });
