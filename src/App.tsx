@@ -12,8 +12,6 @@ function App() {
   const [lastSeconds, setLastSeconds] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
-  const [opacity, setOpacity] = useState(100);
-
   const handleMoveTimer = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.buttons < 1 || !ref.current) {
       return;
@@ -85,9 +83,6 @@ function App() {
     <div
       ref={ref}
       onPointerMove={handleMoveTimer}
-      style={{
-        opacity: opacity / 100,
-      }}
       className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4"
     >
       <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
@@ -121,19 +116,6 @@ function App() {
         <Button variant="destructive" onClick={resetTimer}>
           Reset
         </Button>
-      </div>
-      <div>
-        <label className="flex items-center">
-          <span>Opacity</span>
-          <input
-            type="range"
-            min={20}
-            max={100}
-            value={opacity}
-            onChange={(e) => setOpacity(e.target.valueAsNumber)}
-          />
-          <span>{opacity}</span>
-        </label>
       </div>
     </div>
   );
