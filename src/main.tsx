@@ -6,9 +6,8 @@ import ShadowRoot from "react-shadow";
 
 const APP_ROOT_ID = "timer-app" as const;
 
-const appRoot = document.getElementById(APP_ROOT_ID);
-
 if (import.meta.env.MODE === "development") {
+  const appRoot = document.getElementById(APP_ROOT_ID);
   if (appRoot) {
     ReactDOM.createRoot(appRoot).render(
       <React.StrictMode>
@@ -25,6 +24,7 @@ if (import.meta.env.MODE === "development") {
       return;
     }
 
+    const appRoot = document.getElementById(APP_ROOT_ID);
     if (appRoot) {
       appRoot.remove();
       return;

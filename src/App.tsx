@@ -103,7 +103,7 @@ function App() {
     <div
       ref={ref}
       onPointerMove={handleMoveTimer}
-      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm w-[216px]"
+      className="fixed cursor-grab z-[999999999] border border-gray-200 text-slate-900 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm w-[216px]"
     >
       <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
 
