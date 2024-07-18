@@ -90,9 +90,13 @@ function App() {
   const counting = lastSeconds > 0;
   const paused = intervalId === null && lastSeconds > 0;
 
-  const screenHours = Math.floor(lastSeconds / 3600);
-  const screenMinutes = Math.floor((lastSeconds % 3600) / 60);
-  const screenSeconds = lastSeconds % 60;
+  const screenHours = Math.floor(lastSeconds / 3600)
+    .toString()
+    .padStart(2, "0");
+  const screenMinutes = Math.floor((lastSeconds % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  const screenSeconds = (lastSeconds % 60).toString().padStart(2, "0");
 
   return (
     <div
@@ -102,8 +106,12 @@ function App() {
     >
       <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
       {counting ? (
-        <p>
-          {screenHours}:{screenMinutes}:{screenSeconds}
+        <p className="flex gap-x-2 justify-center items-center">
+          <span className="text-4xl tabular-nums">{screenHours}</span>
+          <span className="text-4xl relative -top-[0.1em]">:</span>
+          <span className="text-4xl tabular-nums">{screenMinutes}</span>
+          <span className="text-4xl relative -top-[0.1em]">:</span>
+          <span className="text-4xl tabular-nums">{screenSeconds}</span>
         </p>
       ) : (
         <TimeSelector
@@ -125,12 +133,22 @@ function App() {
             Resume
           </Button>
         ) : (
-          <Button size="sm" variant="secondary" onClick={stopTimer}>
+          <Button
+            size="sm"
+            variant="secondary"
+            disabled={!counting}
+            onClick={stopTimer}
+          >
             Pause
           </Button>
         )}
 
-        <Button size="sm" variant="destructive" onClick={resetTimer}>
+        <Button
+          size="sm"
+          variant="destructive"
+          disabled={!counting}
+          onClick={resetTimer}
+        >
           Reset
         </Button>
       </div>
