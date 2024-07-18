@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TimeSelector } from "@/components/time-selector";
 
@@ -11,6 +11,21 @@ function App() {
 
   const [lastSeconds, setLastSeconds] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.style.left = "0px";
+      ref.current.style.top = "0px";
+    }
+  }, []);
 
   const handleMoveTimer = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.buttons < 1 || !ref.current) {
@@ -83,7 +98,7 @@ function App() {
     <div
       ref={ref}
       onPointerMove={handleMoveTimer}
-      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4"
+      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm"
     >
       <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
       {counting ? (
@@ -102,18 +117,20 @@ function App() {
       )}
 
       <div className="flex gap-x-4 justify-center mt-5">
-        <Button disabled={!canStart || counting} onClick={startTimer}>
+        <Button size="sm" disabled={!canStart || counting} onClick={startTimer}>
           Start
         </Button>
         {paused ? (
-          <Button onClick={resumeTimer}>Resume</Button>
+          <Button size="sm" onClick={resumeTimer}>
+            Resume
+          </Button>
         ) : (
-          <Button variant="secondary" onClick={stopTimer}>
+          <Button size="sm" variant="secondary" onClick={stopTimer}>
             Pause
           </Button>
         )}
 
-        <Button variant="destructive" onClick={resetTimer}>
+        <Button size="sm" variant="destructive" onClick={resetTimer}>
           Reset
         </Button>
       </div>
