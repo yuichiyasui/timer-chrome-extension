@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { TimeField } from "./components/time-field";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
@@ -101,42 +102,26 @@ function App() {
       }}
       className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4"
     >
-      <h1 className="text-3xl font-bold text-center mb-4">Timer</h1>
+      <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
       {counting ? (
         <p>
           {screenHours}:{screenMinutes}:{screenSeconds}
         </p>
       ) : (
         <div className="flex gap-x-2 justify-center items-center">
-          <label className="flex flex-col items-center justify-center">
-            <input
-              type="number"
-              value={hours}
-              onChange={handleHoursChange}
-              className="rounded px-2 py-1 w-12"
-            />
-            <span>h</span>
-          </label>
-          <span>:</span>
-          <label className="flex flex-col items-center justify-center">
-            <input
-              type="number"
-              value={minutes}
-              onChange={handleMinutesChange}
-              className="rounded px-2 py-1 w-12"
-            />
-            <span>m</span>
-          </label>
-          <span>:</span>
-          <label className="flex flex-col items-center justify-center">
-            <input
-              type="number"
-              value={seconds}
-              onChange={handleSecondsChange}
-              className="rounded px-2 py-1 w-12"
-            />
-            <span>s</span>
-          </label>
+          <TimeField type="hours" value={hours} onChange={handleHoursChange} />
+          <span className="text-4xl relative -top-[0.1em]">:</span>
+          <TimeField
+            type="minutes"
+            value={minutes}
+            onChange={handleMinutesChange}
+          />
+          <span className="text-4xl relative -top-[0.1em]">:</span>
+          <TimeField
+            type="seconds"
+            value={seconds}
+            onChange={handleSecondsChange}
+          />
         </div>
       )}
 
