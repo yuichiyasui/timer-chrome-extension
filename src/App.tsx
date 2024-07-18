@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button } from "./components/Button";
+import { Button } from "@/components/ui/button";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
@@ -147,10 +147,14 @@ function App() {
         {paused ? (
           <Button onClick={resumeTimer}>Resume</Button>
         ) : (
-          <Button onClick={stopTimer}>Pause</Button>
+          <Button variant="secondary" onClick={stopTimer}>
+            Pause
+          </Button>
         )}
 
-        <Button onClick={resetTimer}>Reset</Button>
+        <Button variant="destructive" onClick={resetTimer}>
+          Reset
+        </Button>
       </div>
       <div>
         <label className="flex items-center">
