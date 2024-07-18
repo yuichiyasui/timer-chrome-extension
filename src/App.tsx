@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { TimeField } from "./components/time-field";
+import { TimeSelector } from "@/components/time-selector";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,18 +22,6 @@ function App() {
     ref.current.style.left = `${ref.current.offsetLeft + e.movementX}px`;
     ref.current.style.top = `${ref.current.offsetTop + e.movementY}px`;
     ref.current.setPointerCapture(e.pointerId);
-  };
-
-  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHours(e.target.valueAsNumber);
-  };
-
-  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinutes(e.target.valueAsNumber);
-  };
-
-  const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSeconds(e.target.valueAsNumber);
   };
 
   const startTimer = () => {
@@ -108,21 +96,14 @@ function App() {
           {screenHours}:{screenMinutes}:{screenSeconds}
         </p>
       ) : (
-        <div className="flex gap-x-2 justify-center items-center">
-          <TimeField type="hours" value={hours} onChange={handleHoursChange} />
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <TimeField
-            type="minutes"
-            value={minutes}
-            onChange={handleMinutesChange}
-          />
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <TimeField
-            type="seconds"
-            value={seconds}
-            onChange={handleSecondsChange}
-          />
-        </div>
+        <TimeSelector
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          onChangeHours={(e) => setHours(e.target.valueAsNumber)}
+          onChangeMinutes={(e) => setMinutes(e.target.valueAsNumber)}
+          onChangeSeconds={(e) => setSeconds(e.target.valueAsNumber)}
+        />
       )}
 
       <div className="flex gap-x-4 justify-center mt-5">
