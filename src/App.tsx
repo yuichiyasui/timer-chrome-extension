@@ -4,21 +4,25 @@ import { TimeSelector } from "@/components/time-selector";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
+  const intervalId = useRef<number | null>(null);
 
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   const [lastSeconds, setLastSeconds] = useState(0);
-  const [intervalId, setIntervalId] = useState<number | null>(null);
+
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
+    const cur = intervalId.current;
+
     return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
+      if (cur) {
+        window.clearInterval(cur);
       }
     };
-  }, [intervalId]);
+  }, []);
 
   useEffect(() => {
     if (ref.current) {
@@ -37,52 +41,49 @@ function App() {
     ref.current.setPointerCapture(e.pointerId);
   };
 
+  const countCallback = () => {
+    setLastSeconds((prev) => {
+      if (prev === 0 && intervalId.current) {
+        clearInterval(intervalId.current);
+
+        return 0;
+      }
+      const next = prev - 1;
+      if (next === 0) {
+        setFinished(true);
+      }
+
+      return prev - 1;
+    });
+  };
+
   const startTimer = () => {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
     setLastSeconds(totalSeconds);
 
-    const intervalId = window.setInterval(() => {
-      setLastSeconds((prev) => {
-        if (prev === 0) {
-          clearInterval(intervalId);
-          return 0;
-        }
-
-        return prev - 1;
-      });
-    }, 1000);
-
-    setIntervalId(intervalId);
+    const id = window.setInterval(countCallback, 1000);
+    intervalId.current = id;
   };
 
   const stopTimer = () => {
-    if (intervalId) {
-      window.clearInterval(intervalId);
-      setIntervalId(null);
+    if (intervalId.current) {
+      window.clearInterval(intervalId.current);
+      intervalId.current = null;
     }
   };
 
   const resumeTimer = () => {
-    const intervalId = window.setInterval(() => {
-      setLastSeconds((prev) => {
-        if (prev === 0) {
-          clearInterval(intervalId);
-          return 0;
-        }
+    const id = window.setInterval(countCallback, 1000);
 
-        return prev - 1;
-      });
-    }, 1000);
-
-    setIntervalId(intervalId);
+    intervalId.current = id;
   };
 
   const resetTimer = () => {
     setLastSeconds(0);
 
-    if (intervalId) {
-      window.clearInterval(intervalId);
-      setIntervalId(null);
+    if (intervalId.current) {
+      window.clearInterval(intervalId.current);
+      intervalId.current = null;
     }
   };
 
@@ -102,56 +103,78 @@ function App() {
     <div
       ref={ref}
       onPointerMove={handleMoveTimer}
-      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm"
+      className="fixed cursor-grab z-[999999999] border border-gray-200 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm w-[216px]"
     >
       <h1 className="text-xl font-bold text-center mb-4">Timer</h1>
-      {counting ? (
-        <p className="flex gap-x-2 justify-center items-center">
-          <span className="text-4xl tabular-nums">{screenHours}</span>
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <span className="text-4xl tabular-nums">{screenMinutes}</span>
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <span className="text-4xl tabular-nums">{screenSeconds}</span>
-        </p>
-      ) : (
-        <TimeSelector
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          onChangeHours={(e) => setHours(e.target.valueAsNumber)}
-          onChangeMinutes={(e) => setMinutes(e.target.valueAsNumber)}
-          onChangeSeconds={(e) => setSeconds(e.target.valueAsNumber)}
-        />
-      )}
 
-      <div className="flex gap-x-4 justify-center mt-5">
-        <Button size="sm" disabled={!canStart || counting} onClick={startTimer}>
-          Start
-        </Button>
-        {paused ? (
-          <Button size="sm" onClick={resumeTimer}>
-            Resume
-          </Button>
-        ) : (
-          <Button
-            size="sm"
-            variant="secondary"
-            disabled={!counting}
-            onClick={stopTimer}
-          >
-            Pause
-          </Button>
-        )}
+      {(() => {
+        if (!counting && finished) {
+          return (
+            <>
+              <p className="text-4xl font-bold text-center text-red-500">
+                Time's up!
+              </p>
+              <div className="flex justify-center mt-5">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setFinished(false);
+                    resetTimer();
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+            </>
+          );
+        }
 
-        <Button
-          size="sm"
-          variant="destructive"
-          disabled={!counting}
-          onClick={resetTimer}
-        >
-          Reset
-        </Button>
-      </div>
+        if (counting) {
+          return (
+            <>
+              <p className="flex gap-x-2 justify-center items-center">
+                <span className="text-4xl tabular-nums">{screenHours}</span>
+                <span className="text-4xl relative -top-[0.1em]">:</span>
+                <span className="text-4xl tabular-nums">{screenMinutes}</span>
+                <span className="text-4xl relative -top-[0.1em]">:</span>
+                <span className="text-4xl tabular-nums">{screenSeconds}</span>
+              </p>
+              <div className="flex gap-x-4 justify-center mt-5">
+                {paused ? (
+                  <Button size="sm" onClick={resumeTimer}>
+                    Resume
+                  </Button>
+                ) : (
+                  <Button size="sm" variant="secondary" onClick={stopTimer}>
+                    Pause
+                  </Button>
+                )}
+                <Button size="sm" variant="destructive" onClick={resetTimer}>
+                  Reset
+                </Button>
+              </div>
+            </>
+          );
+        }
+
+        return (
+          <>
+            <TimeSelector
+              hours={hours}
+              minutes={minutes}
+              seconds={seconds}
+              onChangeHours={(e) => setHours(e.target.valueAsNumber)}
+              onChangeMinutes={(e) => setMinutes(e.target.valueAsNumber)}
+              onChangeSeconds={(e) => setSeconds(e.target.valueAsNumber)}
+            />
+            <div className="flex justify-center mt-5">
+              <Button size="sm" disabled={!canStart} onClick={startTimer}>
+                Start
+              </Button>
+            </div>
+          </>
+        );
+      })()}
     </div>
   );
 }
