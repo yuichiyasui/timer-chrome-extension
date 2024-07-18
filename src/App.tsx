@@ -39,7 +39,7 @@ function App() {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
     setLastSeconds(totalSeconds);
 
-    const intervalId = setInterval(() => {
+    const intervalId = window.setInterval(() => {
       setLastSeconds((prev) => {
         if (prev === 0) {
           clearInterval(intervalId);
@@ -55,13 +55,13 @@ function App() {
 
   const stopTimer = () => {
     if (intervalId) {
-      clearInterval(intervalId);
+      window.clearInterval(intervalId);
       setIntervalId(null);
     }
   };
 
   const resumeTimer = () => {
-    const intervalId = setInterval(() => {
+    const intervalId = window.setInterval(() => {
       setLastSeconds((prev) => {
         if (prev === 0) {
           clearInterval(intervalId);
@@ -79,7 +79,7 @@ function App() {
     setLastSeconds(0);
 
     if (intervalId) {
-      clearInterval(intervalId);
+      window.clearInterval(intervalId);
       setIntervalId(null);
     }
   };
