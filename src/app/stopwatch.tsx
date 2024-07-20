@@ -20,6 +20,13 @@ export const Stopwatch = () => {
 
   const start = () => {
     const id = window.setInterval(() => {
+      // finish at 99:59:59
+      const limit = 99 * 60 * 60 + 59 * 60 + 59;
+      if (seconds >= limit) {
+        reset();
+        return;
+      }
+
       setSeconds((prev) => prev + 1);
     }, 1000);
 
