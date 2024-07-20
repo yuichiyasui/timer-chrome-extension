@@ -3,7 +3,7 @@
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit"
   },
-  "[jsonc][javascriptreact][javascript][typescript][typescriptreact]": {
+  "[jsonc][json][javascriptreact][javascript][typescript][typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   }
 }
