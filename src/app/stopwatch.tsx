@@ -46,8 +46,8 @@ export const Stopwatch = () => {
     if (intervalId.current) {
       window.clearInterval(intervalId.current);
       intervalId.current = null;
-      setSeconds(0);
     }
+    setSeconds(0);
     setPaused(false);
   };
 
