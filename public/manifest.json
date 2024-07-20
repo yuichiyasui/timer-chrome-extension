@@ -1,21 +1,21 @@
 {
-	"manifest_version": 3,
-	"name": "Timer",
-	"version": "1.0.0",
-	"description": "Simple timer extension",
-	"icons": {
-		"48": "images/icon-48.png",
-		"128": "images/icon-128.png"
-	},
-	"action": {},
-	"background": {
-		"service_worker": "background.js"
-	},
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["main.js"]
-		}
-	],
-	"permissions": ["activeTab", "scripting"]
+  "manifest_version": 3,
+  "name": "Timer",
+  "version": "1.0.0",
+  "description": "Simple timer extension",
+  "icons": {
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["main.js"]
+    }
+  ],
+  "permissions": ["activeTab", "scripting"]
 }

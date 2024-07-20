@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { TimeSelector } from "@/components/time-selector";
+import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from "react";
 
 export const Timer = () => {
   const intervalId = useRef<number | null>(null);

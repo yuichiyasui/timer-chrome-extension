@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { Timer } from "@/components/timer";
+import { useEffect, useRef } from "react";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
