@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import ShadowRoot from "react-shadow";
-import App from "./App.tsx";
+
+import { App } from "@/app";
 import globalStyles from "./global.css?inline";
 
 const APP_ROOT_ID = "timer-app" as const;
