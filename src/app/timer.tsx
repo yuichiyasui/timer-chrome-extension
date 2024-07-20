@@ -1,3 +1,4 @@
+import { ScreenTime } from "@/components/screen-time";
 import { TimeSelector } from "@/components/time-selector";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
@@ -76,14 +77,6 @@ export const Timer = () => {
   const canStart = hours > 0 || minutes > 0 || seconds > 0;
   const counting = lastSeconds > 0;
 
-  const screenHours = Math.floor(lastSeconds / 3600)
-    .toString()
-    .padStart(2, "0");
-  const screenMinutes = Math.floor((lastSeconds % 3600) / 60)
-    .toString()
-    .padStart(2, "0");
-  const screenSeconds = (lastSeconds % 60).toString().padStart(2, "0");
-
   if (!counting && finished) {
     return (
       <>
@@ -108,13 +101,7 @@ export const Timer = () => {
   if (counting) {
     return (
       <>
-        <p className="flex gap-x-2 justify-center items-center">
-          <span className="text-4xl tabular-nums">{screenHours}</span>
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <span className="text-4xl tabular-nums">{screenMinutes}</span>
-          <span className="text-4xl relative -top-[0.1em]">:</span>
-          <span className="text-4xl tabular-nums">{screenSeconds}</span>
-        </p>
+        <ScreenTime seconds={lastSeconds} />
         <div className="flex gap-x-4 justify-center mt-5">
           {paused ? (
             <Button size="sm" onClick={resumeTimer}>
