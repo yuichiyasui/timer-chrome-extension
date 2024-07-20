@@ -18,7 +18,7 @@ export const App = () => {
     <div
       ref={ref}
       onPointerMove={handleMove}
-      className="fixed cursor-grab z-[999999999] border border-gray-200 text-slate-900 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm w-[216px]"
+      className="fixed cursor-grab z-[999999999] border border-gray-200 text-slate-900 shadow-lg rounded-lg p-4 bg-white/70 backdrop-blur-sm w-[216px] pointer-events-auto"
     >
       <div className="mb-4">
         <Select value={selectedApp} onValueChange={switchApp}>

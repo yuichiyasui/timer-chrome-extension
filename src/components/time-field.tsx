@@ -39,7 +39,14 @@ export const TimeField = ({ type, value, onChange }: Props) => {
         onBlur={() => setIsFocus(false)}
         className="sr-only"
       />
-      <span className={clsx("text-4xl", "tabular-nums", isFocus && "ring")}>
+      <span
+        className={clsx(
+          "text-4xl",
+          "tabular-nums",
+          "cursor-pointer",
+          isFocus && "ring",
+        )}
+      >
         {screenValue}
       </span>
     </label>
