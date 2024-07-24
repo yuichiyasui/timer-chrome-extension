@@ -1,6 +1,7 @@
 import { ScreenTime } from "@/components/screen-time";
 import { TimeSelector } from "@/components/time-selector";
 import { Button } from "@/components/ui/button";
+import { useSounds } from "@/hooks/use-sounds";
 import { useEffect, useRef, useState } from "react";
 
 export const Timer = () => {
@@ -14,6 +15,8 @@ export const Timer = () => {
 
   const [paused, setPaused] = useState(false);
   const [finished, setFinished] = useState(false);
+
+  const { play: playSounds, stop: stopSounds } = useSounds();
 
   useEffect(() => {
     const cur = intervalId.current;
@@ -35,6 +38,7 @@ export const Timer = () => {
       const next = prev - 1;
       if (next === 0) {
         setFinished(true);
+        playSounds();
       }
 
       return prev - 1;
@@ -67,6 +71,7 @@ export const Timer = () => {
   const resetTimer = () => {
     setLastSeconds(0);
     setPaused(false);
+    stopSounds();
 
     if (intervalId.current) {
       window.clearInterval(intervalId.current);

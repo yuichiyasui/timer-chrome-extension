@@ -17,5 +17,11 @@
       "js": ["main.js"]
     }
   ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["sounds/bell.mp3"]
+    }
+  ],
   "permissions": ["activeTab", "scripting"]
 }
