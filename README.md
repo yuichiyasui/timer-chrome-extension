@@ -1,10 +1,10 @@
-<h1 style="text-align: center; margin-bottom: 20px; font-size: 28px; border-bottom: none">Timer Chrome Extension ⏰</h1>
+<h1 align="center">Timer Chrome Extension ⏰</h1>
 
-<div style="text-align: center">
-  <img width="280" src="./docs/capture.png" />
+<div align="center">
+  <img width="280" src="https://github.com/user-attachments/assets/11f6da4d-e2ff-4a73-be29-d575fc6f7bad" />
 </div>
-
-<p style="text-align: center; margin-top: 20px; font-size: 18px">シンプルなタイマーの Google Chrome 拡張機能</p>
+<br>
+<p align="center">ブラウザ上で動くシンプルなタイマーの Google Chrome 拡張機能</p>
 
 ## Features
 
