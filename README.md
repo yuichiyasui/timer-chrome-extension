@@ -1,6 +1,15 @@
-# Timer Chrome Extension
+<h1 style="text-align: center; margin-bottom: 20px; font-size: 28px; border-bottom: none">Timer Chrome Extension ⏰</h1>
 
-シンプルなタイマーの Google Chrome 拡張機能
+<div style="text-align: center">
+  <img width="280" src="./docs/capture.png" />
+</div>
+
+<p style="text-align: center; margin-top: 20px; font-size: 18px">シンプルなタイマーの Google Chrome 拡張機能</p>
+
+## Features
+
+- Timer
+- Stopwatch
 
 ## How to Use
 
@@ -13,7 +22,7 @@
 5. Google Chrome の[拡張機能画面](chrome://extensions/)でデベロッパーモードを ON にする
 6. 「パッケージ化されていない拡張機能を読み込む」を押下して`/dist`配下をアップロードすると拡張機能が利用できるようになる
 
-## Developer Guide
+## Developers Guide
 
 ローカルでの開発時は下記コマンドで動作確認可能
 
